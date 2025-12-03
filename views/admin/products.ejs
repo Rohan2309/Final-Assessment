@@ -1,34 +1,131 @@
 <%- include("../partials/header") %>
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-  <h2>Products</h2>
-  <a href="/admin/products/create" class="btn btn-success">+ Add Product</a>
+<style>
+  body {
+    background: #f8fafc; /* soft gray */
+  }
+
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+  }
+
+  .page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .btn-add {
+    background: #86efac; /* pastel green */
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #065f46;
+  }
+
+  .btn-add:hover {
+    background: #4ade80;
+  }
+
+  .pastel-card {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 18px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  }
+
+  table {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  thead {
+    background: #a5b4fc !important; /* pastel indigo */
+    color: white;
+  }
+
+  tbody tr {
+    transition: background .15s ease;
+  }
+
+  tbody tr:hover {
+    background: #f1f5f9; /* light hover */
+  }
+
+  .btn-warning {
+    background: #fcd34d; /* pastel yellow */
+    border: none;
+    color: #78350f;
+    font-weight: 600;
+    border-radius: 8px;
+  }
+
+  .btn-warning:hover {
+    background: #fbbf24;
+  }
+
+  .btn-danger {
+    background: #fda4af; /* pastel red */
+    border: none;
+    color: #7f1d1d;
+    font-weight: 600;
+    border-radius: 8px;
+  }
+
+  .btn-danger:hover {
+    background: #fb7185;
+  }
+
+  img.product-thumb {
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+    padding: 3px;
+    background: white;
+  }
+</style>
+
+<div class="page-header">
+  <h2 class="page-title">Products</h2>
+  <a href="/admin/products/create" class="btn btn-add">+ Add Product</a>
 </div>
 
-<table class="table table-striped">
-  <thead class="table-dark">
-    <tr>
-      <th>Name</th>
-      <th>Category</th>
-      <th>Image</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% products.forEach(p => { %>
+<div class="pastel-card">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= p.name %></td>
-        <td><%= p.category?.name %></td>
-        <td><img src="/<%= p.image %>" width="80"></td>
-        <td>
-          <a href="/admin/products/<%= p._id %>/edit" class="btn btn-sm btn-warning">Edit</a>
-          <form action="/admin/products/<%= p._id %>?_method=DELETE" method="POST" class="d-inline">
-            <button class="btn btn-sm btn-danger">Delete (SOFT)</button>
-          </form>
-        </td>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Image</th>
+        <th width="170">Actions</th>
       </tr>
-    <% }) %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% products.forEach(p => { %>
+        <tr>
+          <td><%= p.name %></td>
+          <td><%= p.category?.name %></td>
+          <td>
+            <img src="/<%= p.image %>" width="80" class="product-thumb">
+          </td>
+          <td>
+            <a href="/admin/products/<%= p._id %>/edit" class="btn btn-sm btn-warning">Edit</a>
+
+            <form action="/admin/products/<%= p._id %>?_method=DELETE" 
+                  method="POST" 
+                  class="d-inline">
+              <button class="btn btn-sm btn-danger">Delete</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
 
 <%- include("../partials/footer") %>

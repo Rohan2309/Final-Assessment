@@ -1,21 +1,91 @@
 <%- include("../partials/header") %>
 
-<h2 class="mb-4">Admin Dashboard</h2>
-<div class="row">
-  <div class="col-md-6">
-    <div class="card shadow p-3 text-center">
+<style>
+  body {
+    background: #f8fafc; /* soft background */
+  }
+
+  .dashboard-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 30px;
+  }
+
+  .pastel-card {
+    border-radius: 18px;
+    padding: 25px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 22px rgba(0,0,0,0.06);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+
+  .pastel-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 26px rgba(0,0,0,0.10);
+  }
+
+  .pastel-card h4 {
+    color: #475569;
+    font-weight: 600;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #334155;
+  }
+
+  .btn-primary {
+    background: #a5b4fc; /* pastel indigo */
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    background: #818cf8;
+  }
+
+  .btn-secondary {
+    background: #fca5a5; /* pastel pink/red */
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .btn-secondary:hover {
+    background: #f87171;
+  }
+</style>
+
+<h2 class="dashboard-title">Admin Dashboard</h2>
+
+<div class="row g-4 justify-content-center">
+
+  <!-- Products -->
+  <div class="col-md-5">
+    <div class="pastel-card text-center">
       <h4>Total Products</h4>
-      <p class="display-6"><%= products %></p>
+      <p class="stat-number"><%= products %></p>
       <a href="/admin/products" class="btn btn-primary">Manage Products</a>
     </div>
   </div>
-  <div class="col-md-6">
-    <div class="card shadow p-3 text-center">
+
+  <!-- Categories -->
+  <div class="col-md-5">
+    <div class="pastel-card text-center">
       <h4>Total Categories</h4>
-      <p class="display-6"><%= categories %></p>
+      <p class="stat-number"><%= categories %></p>
       <a href="/admin/categories" class="btn btn-secondary">Manage Categories</a>
     </div>
   </div>
+
 </div>
 
 <%- include("../partials/footer") %>

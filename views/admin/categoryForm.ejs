@@ -1,14 +1,110 @@
 <%- include("../partials/header") %>
 
-<h2><%= category._id ? "Edit" : "Add" %> Category</h2>
+<style>
+  body {
+    background: #f8fafc; /* soft gray */
+  }
 
-<form action="<%= category._id ? '/admin/categories/' + category._id + '?_method=PUT' : '/admin/categories' %>" method="POST">
-  <div class="mb-3">
-    <label class="form-label">Category Name</label>
-    <input type="text" class="form-control" name="name" value="<%= category.name || '' %>" required>
+  .form-wrapper {
+    max-width: 520px;
+    margin: 40px auto;
+  }
+
+  .pastel-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+  }
+
+  .pastel-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #334155;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .form-control {
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    padding: 12px;
+  }
+
+  .btn-primary {
+    background: #a5b4fc; /* pastel indigo */
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    background: #818cf8;
+  }
+
+  .btn-secondary {
+    background: #fca5a5; /* pastel red */
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .btn-secondary:hover {
+    background: #f87171;
+  }
+
+  .form-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+</style>
+
+<div class="form-wrapper">
+  <div class="pastel-card">
+    
+    <h2 class="pastel-title">
+      <%= category._id ? "Edit Category" : "Add Category" %>
+    </h2>
+
+    <form 
+      action="<%= category._id 
+        ? '/admin/categories/' + category._id + '?_method=PUT' 
+        : '/admin/categories' 
+      %>" 
+      method="POST"
+    >
+      <div class="mb-3">
+        <label class="form-label">Category Name</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          name="name" 
+          value="<%= category.name || '' %>" 
+          placeholder="Enter category name"
+          required
+        >
+      </div>
+
+      <div class="form-btns">
+        <button class="btn btn-primary">
+          <%= category._id ? "Update" : "Save" %>
+        </button>
+
+        <a href="/admin/categories" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+
   </div>
-  <button class="btn btn-primary"><%= category._id ? "Update" : "Save" %></button>
-  <a href="/admin/categories" class="btn btn-secondary">Cancel</a>
-</form>
+</div>
 
 <%- include("../partials/footer") %>

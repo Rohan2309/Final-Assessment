@@ -1,40 +1,171 @@
 <%- include("../partials/header") %>
 
-<h2><%= product._id ? "Edit" : "Add" %> Product</h2>
+<style>
+  body {
+    background: #f8fafc;
+  }
 
-<form action="<%= product._id ? '/admin/products/' + product._id + '?_method=PUT' : '/admin/products' %>" 
-      method="POST" enctype="multipart/form-data">
-  
-  <div class="mb-3">
-    <label class="form-label">Product Name</label>
-    <input type="text" class="form-control" name="name" value="<%= product.name || '' %>" required>
+  .form-wrapper {
+    max-width: 650px;
+    margin: 40px auto;
+  }
+
+  .pastel-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 4px 22px rgba(0,0,0,0.06);
+    border: 1px solid #e2e8f0;
+  }
+
+  .pastel-title {
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: #334155;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .form-label {
+    font-weight: 600;
+    color: #475569;
+  }
+
+  .form-control,
+  .form-select,
+  textarea {
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    padding: 12px;
+  }
+
+  textarea {
+    height: 120px;
+  }
+
+  .image-preview {
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 6px;
+    background: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  .btn-primary {
+    background: #a5b4fc;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 600;
+  }
+
+  .btn-primary:hover {
+    background: #818cf8;
+  }
+
+  .btn-secondary {
+    background: #fca5a5;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .btn-secondary:hover {
+    background: #f87171;
+  }
+
+  .form-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+</style>
+
+<div class="form-wrapper">
+  <div class="pastel-card">
+    
+    <h2 class="pastel-title">
+      <%= product._id ? "Edit Product" : "Add Product" %>
+    </h2>
+
+    <form 
+      action="<%= product._id 
+        ? '/admin/products/' + product._id + '?_method=PUT' 
+        : '/admin/products' 
+      %>" 
+      method="POST" 
+      enctype="multipart/form-data"
+    >
+    
+      <!-- Product Name -->
+      <div class="mb-3">
+        <label class="form-label">Product Name</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          name="name" 
+          value="<%= product.name || '' %>" 
+          placeholder="Enter product name"
+          required
+        >
+      </div>
+
+      <!-- Category -->
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select name="category" class="form-select" required>
+          <option value="">-- Select Category --</option>
+          <% categories.forEach(c => { %>
+            <option 
+              value="<%= c._id %>" 
+              <%= product.category == c._id ? "selected" : "" %>>
+              <%= c.name %>
+            </option>
+          <% }) %>
+        </select>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea 
+          name="description" 
+          class="form-control"
+          placeholder="Enter product description"
+        ><%= product.description || '' %></textarea>
+      </div>
+
+      <!-- Image -->
+      <div class="mb-3">
+        <label class="form-label">Product Image</label>
+
+        <% if(product.image){ %>
+          <div class="image-preview">
+            <img src="/<%= product.image %>" width="150" style="border-radius: 10px;">
+          </div>
+        <% } %>
+
+        <input 
+          type="file" 
+          name="image" 
+          class="form-control"
+          <%= product._id ? "" : "required" %>
+        >
+      </div>
+
+      <!-- Buttons -->
+      <div class="form-btns">
+        <button class="btn btn-primary">
+          <%= product._id ? "Update" : "Save" %>
+        </button>
+        <a href="/admin/products" class="btn btn-secondary">Cancel</a>
+      </div>
+
+    </form>
+
   </div>
-
-  <div class="mb-3">
-    <label class="form-label">Category</label>
-    <select name="category" class="form-select" required>
-      <option value="">-- Select Category --</option>
-      <% categories.forEach(c => { %>
-        <option value="<%= c._id %>" <%= product.category == c._id ? "selected" : "" %>><%= c.name %></option>
-      <% }) %>
-    </select>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">Description</label>
-    <textarea name="description" class="form-control"><%= product.description || '' %></textarea>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">Image</label>
-    <% if(product.image){ %>
-      <img src="/<%= product.image %>" width="120" class="mb-2"><br>
-    <% } %>
-    <input type="file" name="image" class="form-control" <%= product._id ? "" : "required" %>>
-  </div>
-
-  <button class="btn btn-primary"><%= product._id ? "Update" : "Save" %></button>
-  <a href="/admin/products" class="btn btn-secondary">Cancel</a>
-</form>
+</div>
 
 <%- include("../partials/footer") %>
