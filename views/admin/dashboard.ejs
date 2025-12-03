@@ -1,0 +1,21 @@
+<%- include("../partials/header") %>
+
+<h2 class="mb-4">Admin Dashboard</h2>
+<div class="row">
+  <div class="col-md-6">
+    <div class="card shadow p-3 text-center">
+      <h4>Total Products</h4>
+      <p class="display-6"><%= products %></p>
+      <a href="/admin/products" class="btn btn-primary">Manage Products</a>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card shadow p-3 text-center">
+      <h4>Total Categories</h4>
+      <p class="display-6"><%= categories %></p>
+      <a href="/admin/categories" class="btn btn-secondary">Manage Categories</a>
+    </div>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>

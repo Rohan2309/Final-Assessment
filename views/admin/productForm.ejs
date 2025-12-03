@@ -1,0 +1,40 @@
+<%- include("../partials/header") %>
+
+<h2><%= product._id ? "Edit" : "Add" %> Product</h2>
+
+<form action="<%= product._id ? '/admin/products/' + product._id + '?_method=PUT' : '/admin/products' %>" 
+      method="POST" enctype="multipart/form-data">
+  
+  <div class="mb-3">
+    <label class="form-label">Product Name</label>
+    <input type="text" class="form-control" name="name" value="<%= product.name || '' %>" required>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Category</label>
+    <select name="category" class="form-select" required>
+      <option value="">-- Select Category --</option>
+      <% categories.forEach(c => { %>
+        <option value="<%= c._id %>" <%= product.category == c._id ? "selected" : "" %>><%= c.name %></option>
+      <% }) %>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Description</label>
+    <textarea name="description" class="form-control"><%= product.description || '' %></textarea>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Image</label>
+    <% if(product.image){ %>
+      <img src="/<%= product.image %>" width="120" class="mb-2"><br>
+    <% } %>
+    <input type="file" name="image" class="form-control" <%= product._id ? "" : "required" %>>
+  </div>
+
+  <button class="btn btn-primary"><%= product._id ? "Update" : "Save" %></button>
+  <a href="/admin/products" class="btn btn-secondary">Cancel</a>
+</form>
+
+<%- include("../partials/footer") %>

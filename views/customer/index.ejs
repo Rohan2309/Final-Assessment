@@ -1,0 +1,40 @@
+<%- include("../partials/header") %>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <form method="GET" action="/">
+                <select name="category" class="form-select mb-2" onchange="this.form.submit()">
+                    <option value="">All Categories</option>
+                    <% categories.forEach(c=> { %>
+                        <option value="<%= c._id %>" <%=(c._id.toString()===category.toString()) ? "selected" : "" %>>
+                            <%= c.name %>
+                        </option>
+                        <% }) %>
+                </select>
+
+                <input type="text" name="search" class="form-control" placeholder="Search..."
+                    value="<%= search || '' %>">
+            </form>
+        </div>
+    </div>
+
+    <div class="row">
+        <% products.forEach(p=> { %>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm">
+                    <img src="/<%= p.image %>" class="card-img-top" style="height:200px;object-fit:cover;">
+                    <div class="card-body">
+                        <h5>
+                            <%= p.name %>
+                        </h5>
+                        <p class="text-muted">
+                            <%= p.category?.name %>
+                        </p>
+                        <a href="/product/<%= p.slug %>" class="btn btn-sm btn-primary">View</a>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+    </div>
+
+    <%- include("../partials/footer") %>
